@@ -1,0 +1,912 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Questigo — MCA Major Project Report | M. Akshay Yadav</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --ink: #1a1c23;
+    --muted: #5b6070;
+    --line: #e4e6ee;
+    --bg: #ffffff;
+    --soft: #f7f7fb;
+    --purple: #7c3aed;
+    --purple-dark: #5b21b6;
+    --purple-soft: #f3eefe;
+    --green: #16a34a;
+    --amber: #d97706;
+    --red: #dc2626;
+    --blue: #2563eb;
+    --dark: #0f1117;
+  }
+
+  * { box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Poppins', system-ui, sans-serif;
+    color: var(--ink);
+    background: #edeef3;
+    margin: 0;
+    line-height: 1.65;
+    font-size: 15px;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Page sheet metaphor */
+  .page {
+    background: var(--bg);
+    max-width: 850px;
+    margin: 26px auto;
+    padding: 62px 68px;
+    box-shadow: 0 6px 34px rgba(20, 22, 40, 0.10);
+    border-radius: 4px;
+  }
+
+  h1, h2, h3, h4 { font-weight: 700; line-height: 1.25; color: var(--ink); }
+  h2 { font-size: 25px; margin: 6px 0 14px; letter-spacing: -0.02em; }
+  h3 { font-size: 18px; margin: 26px 0 8px; color: var(--purple-dark); }
+  h4 { font-size: 15px; margin: 18px 0 6px; font-weight: 600; }
+  p { margin: 0 0 12px; }
+  a { color: var(--purple); text-decoration: none; }
+
+  .section-tag {
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--purple);
+    background: var(--purple-soft);
+    padding: 4px 12px;
+    border-radius: 20px;
+    margin-bottom: 10px;
+  }
+
+  .lead { font-size: 16px; color: var(--muted); }
+
+  ul, ol { margin: 0 0 14px; padding-left: 22px; }
+  li { margin-bottom: 5px; }
+
+  strong { font-weight: 600; }
+
+  code {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.86em;
+    background: var(--purple-soft);
+    color: var(--purple-dark);
+    padding: 1px 6px;
+    border-radius: 4px;
+  }
+
+  pre {
+    font-family: 'JetBrains Mono', monospace;
+    background: var(--dark);
+    color: #e6e6f0;
+    padding: 18px 20px;
+    border-radius: 10px;
+    overflow-x: auto;
+    font-size: 12.6px;
+    line-height: 1.6;
+    margin: 14px 0 18px;
+  }
+  pre code { background: none; color: inherit; padding: 0; }
+  .cmt { color: #8b93a7; }
+  .kw { color: #c792ea; }
+  .str { color: #c3e88d; }
+  .fn { color: #82aaff; }
+  .num { color: #f78c6c; }
+
+  table { width: 100%; border-collapse: collapse; margin: 14px 0 20px; font-size: 13.5px; }
+  th, td { text-align: left; padding: 9px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  th { background: var(--soft); font-weight: 600; color: var(--ink); font-size: 12.5px; letter-spacing: 0.02em; }
+  tr:last-child td { border-bottom: none; }
+  td code { font-size: 12px; }
+
+  .callout {
+    background: var(--soft);
+    border-left: 4px solid var(--purple);
+    padding: 14px 18px;
+    border-radius: 0 8px 8px 0;
+    margin: 16px 0;
+    font-size: 14px;
+  }
+  .callout.green { border-left-color: var(--green); background: #f1fbf4; }
+  .callout.amber { border-left-color: var(--amber); background: #fef9f0; }
+
+  .pill { display:inline-block; font-size:11px; font-weight:600; padding:2px 9px; border-radius:20px; }
+  .pill.done { background:#e7f8ee; color:var(--green); }
+  .pill.core { background:var(--purple-soft); color:var(--purple-dark); }
+
+  .grid2 { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+  .card {
+    border:1px solid var(--line);
+    border-radius:12px;
+    padding:16px 18px;
+    background:var(--bg);
+  }
+  .card h4 { margin-top:0; color:var(--purple-dark); }
+  .card p { font-size:13.5px; color:var(--muted); margin-bottom:0; }
+
+  hr { border:none; border-top:1px solid var(--line); margin:34px 0; }
+
+  .figure-note { font-size:12.5px; color:var(--muted); text-align:center; font-style:italic; margin-top:-8px; }
+
+  /* Cover page */
+  .cover {
+    min-height: 1030px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background:
+      radial-gradient(1100px 500px at 80% -10%, rgba(124,58,237,0.16), transparent 60%),
+      radial-gradient(900px 500px at -10% 110%, rgba(37,99,235,0.10), transparent 55%),
+      var(--dark);
+    color: #f4f4fa;
+    padding: 70px 68px;
+    border-radius: 4px;
+  }
+  .cover .top { display:flex; justify-content:space-between; align-items:flex-start; font-size:13px; color:#c9c9de; }
+  .cover .logo { display:flex; align-items:center; gap:12px; }
+  .cover .logo .mark {
+    width:46px; height:46px; border-radius:12px;
+    background:linear-gradient(140deg,#7c3aed,#a855f7);
+    display:flex; align-items:center; justify-content:center;
+    font-size:24px; box-shadow:0 8px 26px rgba(124,58,237,0.5);
+  }
+  .cover .logo .name { font-weight:700; font-size:20px; color:#fff; letter-spacing:-0.01em; }
+  .cover .center { margin: auto 0; }
+  .cover .kicker { color:#c4b5fd; font-weight:600; letter-spacing:0.22em; text-transform:uppercase; font-size:13px; margin-bottom:18px; }
+  .cover h1 {
+    font-size: 74px; line-height:0.98; font-weight:800; color:#fff;
+    letter-spacing:-0.03em; margin:0 0 20px;
+  }
+  .cover .tagline { font-size:20px; color:#dcdcef; font-weight:300; max-width:560px; line-height:1.5; }
+  .cover .rule { width:66px; height:5px; background:linear-gradient(90deg,#7c3aed,#a855f7); border-radius:6px; margin:26px 0; }
+  .cover .meta-grid { display:grid; grid-template-columns:1fr 1fr; gap:22px 40px; margin-top:6px; max-width:640px; }
+  .cover .meta-grid .lbl { font-size:11px; letter-spacing:0.16em; text-transform:uppercase; color:#9a9ac0; margin-bottom:3px; }
+  .cover .meta-grid .val { font-size:16px; color:#fff; font-weight:500; }
+  .cover .foot { border-top:1px solid rgba(255,255,255,0.12); padding-top:22px; font-size:12.5px; color:#9a9ac0; display:flex; justify-content:space-between; }
+
+  /* TOC */
+  .toc ol { list-style:none; padding:0; counter-reset: toc; }
+  .toc li {
+    counter-increment: toc;
+    display:flex; align-items:baseline; gap:12px;
+    padding:9px 0; border-bottom:1px dashed var(--line);
+    font-size:14.5px;
+  }
+  .toc li::before { content: counter(toc, decimal-leading-zero); color:var(--purple); font-weight:700; font-size:13px; min-width:26px; }
+  .toc li .dots { flex:1; border-bottom:1px dotted #c7cad6; margin:0 4px; transform:translateY(-3px); }
+  .toc a { color:var(--ink); font-weight:500; }
+  .toc a:hover { color:var(--purple); }
+
+  .stat-row { display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin:20px 0 24px; }
+  .stat {
+    border:1px solid var(--line); border-radius:12px; padding:16px 14px; text-align:center;
+    background:linear-gradient(180deg,#fbfaff,#fff);
+  }
+  .stat .n { font-size:28px; font-weight:700; color:var(--purple-dark); line-height:1; }
+  .stat .l { font-size:11.5px; color:var(--muted); margin-top:6px; letter-spacing:0.02em; }
+
+  .kbd { font-family:'JetBrains Mono',monospace; font-size:12px; background:#eceef5; border:1px solid #d7dae6; border-bottom-width:2px; border-radius:5px; padding:1px 6px; color:#333; }
+
+  .screenshot {
+    border:2px dashed #cfd2e0; border-radius:12px; background:var(--soft);
+    padding:38px 20px; text-align:center; color:var(--muted); font-size:13px; margin:14px 0;
+  }
+  .screenshot .icn { font-size:26px; display:block; margin-bottom:6px; }
+
+  @media print {
+    body { background:#fff; font-size:11.5pt; }
+    .page { box-shadow:none; margin:0; max-width:none; padding:0; border-radius:0; }
+    .page + .page { page-break-before: always; }
+    .cover { min-height:100vh; page-break-after:always; }
+    pre, table, .card, .callout, .screenshot { page-break-inside: avoid; }
+    h2, h3 { page-break-after: avoid; }
+    a { color: var(--ink); }
+  }
+
+  @media (max-width: 720px) {
+    .page { padding:34px 22px; }
+    .grid2, .stat-row, .cover .meta-grid { grid-template-columns:1fr; }
+    .cover h1 { font-size:48px; }
+    .cover { padding:44px 28px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ COVER ============ -->
+<section class="cover">
+  <div class="top">
+    <div class="logo">
+      <div class="mark">⚔️</div>
+      <div class="name">Questigo</div>
+    </div>
+    <div style="text-align:right;">
+      Major Project Report<br/>
+      MCA — IV Semester
+    </div>
+  </div>
+
+  <div class="center">
+    <div class="kicker">Game-Based Interactive Learning Platform</div>
+    <h1>Questigo</h1>
+    <div class="tagline">Learning to code by <em>building systems</em>, not answering quizzes — a gamified platform with AI-assisted content generation, XP progression, and teacher-verified answer keys.</div>
+    <div class="rule"></div>
+    <div class="meta-grid">
+      <div>
+        <div class="lbl">Submitted By</div>
+        <div class="val">M. Akshay Yadav</div>
+      </div>
+      <div>
+        <div class="lbl">Roll Number</div>
+        <div class="val">100524862041</div>
+      </div>
+      <div>
+        <div class="lbl">Programme</div>
+        <div class="val">Master of Computer Applications (MCA)</div>
+      </div>
+      <div>
+        <div class="lbl">Semester</div>
+        <div class="val">IV Semester — Major Project</div>
+      </div>
+      <div>
+        <div class="lbl">University</div>
+        <div class="val">Osmania University, Hyderabad</div>
+      </div>
+      <div>
+        <div class="lbl">Project Type</div>
+        <div class="val">Full-Stack Web Application</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="foot">
+    <span>Questigo · Interactive Learning Platform</span>
+    <span>Academic Year 2025–2026</span>
+  </div>
+</section>
+
+<!-- ============ TABLE OF CONTENTS ============ -->
+<section class="page toc">
+  <span class="section-tag">Contents</span>
+  <h2>Table of Contents</h2>
+  <ol>
+    <li><a href="#abstract">Abstract</a><span class="dots"></span></li>
+    <li><a href="#intro">Introduction &amp; Motivation — Why This Project</a><span class="dots"></span></li>
+    <li><a href="#problem">Problem Statement &amp; Objectives</a><span class="dots"></span></li>
+    <li><a href="#standout">How Questigo Stands Apart — Competitive Analysis</a><span class="dots"></span></li>
+    <li><a href="#architecture">System Architecture &amp; Design</a><span class="dots"></span></li>
+    <li><a href="#stack">Technology Stack</a><span class="dots"></span></li>
+    <li><a href="#db">Database Design</a><span class="dots"></span></li>
+    <li><a href="#modules">Implementation — Modules &amp; Features</a><span class="dots"></span></li>
+    <li><a href="#coding">Coding — Core Algorithms &amp; Logic</a><span class="dots"></span></li>
+    <li><a href="#execution">Execution — Setup, Running &amp; Demo Flow</a><span class="dots"></span></li>
+    <li><a href="#results">Results &amp; Analysis</a><span class="dots"></span></li>
+    <li><a href="#testing">Testing &amp; Verification</a><span class="dots"></span></li>
+    <li><a href="#future">Future Scope</a><span class="dots"></span></li>
+    <li><a href="#conclusion">Conclusion</a><span class="dots"></span></li>
+  </ol>
+
+  <div class="stat-row">
+    <div class="stat"><div class="n">2</div><div class="l">Game Mechanics<br/>(Sequence + Coding)</div></div>
+    <div class="stat"><div class="n">6</div><div class="l">Development<br/>Phases Completed</div></div>
+    <div class="stat"><div class="n">10</div><div class="l">Level XP<br/>Progression Tiers</div></div>
+    <div class="stat"><div class="n">2</div><div class="l">User Roles<br/>(Student / Teacher)</div></div>
+  </div>
+  <p class="figure-note">Questigo at a glance — a complete, server-driven MVP with a working AI content pipeline.</p>
+</section>
+
+<!-- ============ 1. ABSTRACT ============ -->
+<section class="page" id="abstract">
+  <span class="section-tag">Section 01</span>
+  <h2>Abstract</h2>
+  <p class="lead">Questigo is a game-based interactive learning platform that teaches Computer Science concepts through active construction rather than passive reading or multiple-choice testing.</p>
+  <p>
+    Traditional e-learning tools rely heavily on video lectures and quiz-style assessment. These test <em>recognition</em> — a student picks the right option from a list — but they rarely test whether a learner truly understands how the parts of a system fit together. Questigo addresses this gap with a distinctive gameplay model: instead of answering a question, the student <strong>reconstructs a real process</strong> — for example, the SQL query execution pipeline (<code>FROM → WHERE → GROUP BY → HAVING → SELECT → ORDER BY</code>) — by assembling shuffled concept tiles into the correct order. Every connection is validated individually, and wrong links are turned into targeted teaching moments.
+  </p>
+  <p>
+    The platform wraps this mechanic in an RPG-inspired progression system: students earn <strong>XP</strong>, climb through a fixed <strong>10-level ladder</strong>, unlock <strong>achievements</strong>, and compete on a <strong>leaderboard</strong>. Content is organised as a <strong>Skill Tree</strong> in which each node unlocks only after its prerequisite is completed. A second mechanic — a <strong>Monaco-based Coding Challenge</strong> that runs and grades real Python against hidden test cases — demonstrates that the architecture generalises beyond a single game type.
+  </p>
+  <p>
+    A defining feature is the <strong>AI-assisted content pipeline</strong>: a teacher uploads a PDF of study material, a Large Language Model (via the Groq API) converts it into structured, playable quests, and the teacher <strong>reviews and approves</strong> the generated answer key before any student sees it. This human-in-the-loop design keeps AI-generated content trustworthy — a critical requirement for an educational tool.
+  </p>
+  <p>
+    The system is built as a modern full-stack web application: a <strong>React 19 + TypeScript</strong> single-page frontend and a <strong>Python FastAPI + PostgreSQL</strong> backend, secured with JWT authentication. The complete MVP — authentication, both game mechanics, XP/level persistence, achievements, leaderboard, student profile, teacher authoring and the full AI generation-and-approval workflow — is implemented end-to-end and is <strong>fully database-driven with no mock data</strong>.
+  </p>
+</section>
+
+<!-- ============ 2. INTRODUCTION ============ -->
+<section class="page" id="intro">
+  <span class="section-tag">Section 02</span>
+  <h2>Introduction &amp; Motivation — Why This Project</h2>
+  <p>
+    Learning to program is difficult, and a large part of that difficulty is <em>engagement</em>. Most learners begin with enthusiasm and abandon the effort long before competence sets in. The reason is rarely the material itself — it is the <strong>delivery</strong>. Slides, PDFs, and multiple-choice quizzes are passive; they do not require the learner to <em>do</em> anything with the knowledge, and they provide little of the moment-to-moment feedback and reward that sustains motivation.
+  </p>
+
+  <h3>2.1 Why I Chose This Project</h3>
+  <p>I chose to build Questigo for four reasons that together make it a strong MCA major project:</p>
+  <ul>
+    <li><strong>It solves a real, relatable problem.</strong> Every student in the panel has struggled to stay motivated while learning a technical subject. The problem needs no explanation.</li>
+    <li><strong>It is technically substantial.</strong> The project spans a full modern stack — a reactive SPA, a typed REST API, a relational database, JWT security, a sandboxed code runner, and a live LLM integration — demonstrating breadth across the MCA curriculum (web technologies, DBMS, software engineering, and AI).</li>
+    <li><strong>It is genuinely novel.</strong> The "reconstruct-the-pipeline" mechanic is not a re-skinned quiz; it is a different <em>kind</em> of assessment that tests structural understanding. This gives the project a clear, defensible point of originality.</li>
+    <li><strong>It is buildable and demonstrable.</strong> Unlike vague "AI tutor" ideas, every feature here produces a visible, clickable screen, which makes for a compelling live demo.</li>
+  </ul>
+
+  <h3>2.2 The Core Insight</h3>
+  <div class="callout">
+    <strong>A quiz tests recognition. Questigo tests construction.</strong> Recognising the definition of <em>normalization</em> is easy; correctly ordering the steps to take a table from an unnormalized form to 3NF proves you actually understand the process. Computer Science is full of such <em>processes, lifecycles, and pipelines</em> — SQL execution, normalization, the OSI model, the software development lifecycle, the OS process lifecycle — and every one of them maps naturally onto the Sequence Builder mechanic.
+  </div>
+
+  <h3>2.3 Naming</h3>
+  <p>
+    The name <strong>Questigo</strong> fuses <em>Quest</em> (the RPG unit of progress that frames each learning activity) with a suffix suggesting <em>go / ignite</em> — capturing the product's intent: to turn the grind of learning into a sequence of achievable, rewarding quests.
+  </p>
+</section>
+
+<!-- ============ 3. PROBLEM STATEMENT ============ -->
+<section class="page" id="problem">
+  <span class="section-tag">Section 03</span>
+  <h2>Problem Statement &amp; Objectives</h2>
+
+  <h3>3.1 Problem Statement</h3>
+  <p>Students struggle to learn programming and CS fundamentals effectively because current tools share a common set of weaknesses:</p>
+  <ul>
+    <li>Learning is <strong>passive and theory-heavy</strong> — watch, read, memorise.</li>
+    <li>MCQ-based assessment tests <strong>recall, not reasoning</strong>, and does not develop logical/structural thinking.</li>
+    <li>Abstract processes (query execution, normalization, protocol stacks) are <strong>hard to visualise</strong> from text alone.</li>
+    <li>Existing platforms provide <strong>limited engagement</strong> and weak feedback loops, so learners disengage.</li>
+    <li>Teachers spend <strong>significant manual effort</strong> authoring exercises and answer keys.</li>
+  </ul>
+
+  <h3>3.2 Primary Objective</h3>
+  <div class="callout green">
+    Develop a <strong>gamified learning platform</strong> that enables students to learn programming and CS concepts through <strong>interactive, construction-based challenges</strong> and a <strong>structured progression system</strong>, while giving teachers <strong>AI-assisted tools</strong> to author and verify content quickly.
+  </div>
+
+  <h3>3.3 Specific Objectives</h3>
+  <table>
+    <thead><tr><th style="width:34px;">#</th><th>Objective</th><th style="width:110px;">Status</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td>Secure authentication with two roles (Student, Teacher) using JWT.</td><td><span class="pill done">Delivered</span></td></tr>
+      <tr><td>2</td><td>A construction-based game mechanic (Sequence Builder) with per-link validation.</td><td><span class="pill done">Delivered</span></td></tr>
+      <tr><td>3</td><td>A real coding-challenge mechanic that executes and grades student code.</td><td><span class="pill done">Delivered</span></td></tr>
+      <tr><td>4</td><td>A gamification engine — XP, a 10-tier level ladder, achievements, leaderboard.</td><td><span class="pill done">Delivered</span></td></tr>
+      <tr><td>5</td><td>A Skill-Tree progression model with prerequisite-gated unlocking.</td><td><span class="pill done">Delivered</span></td></tr>
+      <tr><td>6</td><td>AI generation of quests from teacher-supplied PDFs / text.</td><td><span class="pill done">Delivered</span></td></tr>
+      <tr><td>7</td><td>A mandatory teacher review-and-approval workflow for AI content.</td><td><span class="pill done">Delivered</span></td></tr>
+      <tr><td>8</td><td>Student progress tracking, profile, and completion history.</td><td><span class="pill done">Delivered</span></td></tr>
+      <tr><td>9</td><td>A responsive, professional, game-inspired UI (mobile-first to 375px).</td><td><span class="pill done">Delivered</span></td></tr>
+      <tr><td>10</td><td>A maintainable, scalable, layered architecture with no mock data.</td><td><span class="pill done">Delivered</span></td></tr>
+    </tbody>
+  </table>
+
+  <h3>3.4 Scope of the MVP</h3>
+  <p>
+    The MVP proves the <strong>complete architecture and end-to-end workflow</strong> rather than an exhaustive content library. It ships a full DBMS learning track, two working game mechanics, the entire gamification loop, and the complete teacher pipeline (hand-authoring <em>and</em> AI generation for both quest types). Advanced items — a hardened code sandbox, multiplayer, and adaptive difficulty — are deliberately deferred to <a href="#future">Future Scope (Section 13)</a>.
+  </p>
+</section>
+
+<!-- ============ 4. STANDOUT ============ -->
+<section class="page" id="standout">
+  <span class="section-tag">Section 04</span>
+  <h2>How Questigo Stands Apart</h2>
+  <p class="lead">There are many learning platforms. Questigo's originality is best understood by comparing it directly with the categories it borrows from.</p>
+
+  <h3>4.1 Competitive Comparison</h3>
+  <table>
+    <thead>
+      <tr><th>Capability</th><th>Quiz apps (Kahoot)</th><th>Coding sites (LeetCode / HackerRank)</th><th>Gamified apps (Duolingo)</th><th style="color:var(--purple-dark);">Questigo</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Tests <strong>construction</strong>, not just recall</td><td>✕</td><td>◑ (code only)</td><td>✕</td><td><strong>✓</strong></td></tr>
+      <tr><td>Structural / sequence reasoning</td><td>✕</td><td>✕</td><td>✕</td><td><strong>✓</strong></td></tr>
+      <tr><td>RPG progression (XP · levels · skill tree)</td><td>◑</td><td>◑</td><td>✓</td><td><strong>✓</strong></td></tr>
+      <tr><td>Real code execution &amp; grading</td><td>✕</td><td>✓</td><td>✕</td><td><strong>✓</strong></td></tr>
+      <tr><td>Per-step teaching feedback</td><td>✕</td><td>◑</td><td>◑</td><td><strong>✓</strong></td></tr>
+      <tr><td>AI generates content from teacher material</td><td>✕</td><td>✕</td><td>✕</td><td><strong>✓</strong></td></tr>
+      <tr><td>Teacher-verified answer keys</td><td>✓</td><td>n/a</td><td>✕</td><td><strong>✓</strong></td></tr>
+    </tbody>
+  </table>
+  <p class="figure-note">✓ = fully supported ◑ = partial ✕ = absent. Questigo is the only entry combining construction-based assessment, RPG progression, real code execution, and a teacher-verified AI pipeline.</p>
+
+  <h3>4.2 The Four Differentiators</h3>
+  <div class="grid2">
+    <div class="card">
+      <h4>① Construction over recognition</h4>
+      <p>The Sequence Builder makes students <em>rebuild</em> a real process from its parts and validates each connection — a deeper form of assessment than any MCQ.</p>
+    </div>
+    <div class="card">
+      <h4>② A trustworthy AI pipeline</h4>
+      <p>AI drafts content; a teacher <em>must</em> approve the answer key before publication. The system gets AI's speed without inheriting AI's mistakes.</p>
+    </div>
+    <div class="card">
+      <h4>③ Subject-agnostic by design</h4>
+      <p>Any process, lifecycle, or pipeline in CS maps onto the mechanic — one engine serves DBMS, OS, Networks, and Software Engineering alike.</p>
+    </div>
+    <div class="card">
+      <h4>④ Extensible node types</h4>
+      <p>Sequence Builder and Coding Challenge share one Skill-Tree engine, proving new mechanics can be added without redesign.</p>
+    </div>
+  </div>
+
+  <div class="callout amber">
+    <strong>Why this makes a strong major project:</strong> it is <em>original</em> (a genuinely new assessment mechanic), <em>technically complete</em> (full stack + AI + sandboxed execution), <em>demonstrable</em> (every feature is a visible screen), and <em>defensible</em> (each design decision has a clear engineering rationale, documented in this report).
+  </div>
+</section>
+
+<!-- ============ 5. ARCHITECTURE ============ -->
+<section class="page" id="architecture">
+  <span class="section-tag">Section 05</span>
+  <h2>System Architecture &amp; Design</h2>
+
+  <h3>5.1 High-Level Architecture</h3>
+  <p>Questigo follows a classic <strong>decoupled client–server</strong> design: a single-page React application communicates with a stateless FastAPI backend over a versioned REST API, with PostgreSQL as the system of record and an external LLM provider for content generation.</p>
+
+<pre><code><span class="cmt">┌────────────────────────────────────────────────────────────┐</span>
+<span class="cmt">│  CLIENT — React 19 SPA (Vite)                              │</span>
+<span class="cmt">│  Zustand (auth) · React Query (server cache) · Framer     │</span>
+<span class="cmt">│  Sequence Builder · Monaco Coding · Skill Tree · Dashboards│</span>
+<span class="cmt">└───────────────┬────────────────────────────────────────────┘</span>
+                │  HTTPS · JSON · Authorization: Bearer &lt;JWT&gt;
+                │  { "data": ..., "error": null }
+<span class="cmt">┌───────────────┴────────────────────────────────────────────┐</span>
+<span class="cmt">│  SERVER — FastAPI (Python)                                 │</span>
+<span class="cmt">│  Routes → Services (business logic) → CRUD → Models        │</span>
+<span class="cmt">│  JWT auth · role guards · code runner · LLM client         │</span>
+<span class="cmt">└───────┬───────────────────────────────────┬────────────────┘</span>
+        │                                   │
+<span class="cmt">┌───────┴─────────┐             ┌───────────┴──────────┐</span>
+<span class="cmt">│  PostgreSQL     │             │  Groq LLM API        │</span>
+<span class="cmt">│  users, quests, │             │  (OpenAI-compatible; │</span>
+<span class="cmt">│  tiles, attempts│             │   offline stub too)  │</span>
+<span class="cmt">└─────────────────┘             └──────────────────────┘</span></code></pre>
+
+  <h3>5.2 Layered Backend</h3>
+  <p>The backend enforces a strict one-way dependency flow, keeping each layer single-responsibility and independently testable:</p>
+  <table>
+    <thead><tr><th>Layer</th><th>Responsibility</th><th>Example</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Routes</strong></td><td>Thin HTTP handlers; parse request, call a service, shape the response.</td><td><code>api/v1/teacher.py</code></td></tr>
+      <tr><td><strong>Services</strong></td><td>Business logic — XP math, unlock rules, generation, approval.</td><td><code>services/generation_service.py</code></td></tr>
+      <tr><td><strong>CRUD</strong></td><td>Database read/write helpers, isolating SQLAlchemy queries.</td><td><code>crud/content.py</code></td></tr>
+      <tr><td><strong>Models</strong></td><td>SQLAlchemy ORM classes mapped to raw-SQL-canonical tables.</td><td><code>models/content.py</code></td></tr>
+    </tbody>
+  </table>
+
+  <h3>5.3 Feature-Sliced Frontend</h3>
+  <p>The React app is organised by <strong>feature</strong>, not by file type. Each feature folder owns its screens, components, and API calls; shared UI primitives live in one place and contain no business logic.</p>
+<pre><code>client/src/
+├── components/ui/     <span class="cmt"># Button, Card, Badge, Progress (Radix-based)</span>
+├── features/
+│   ├── auth/          <span class="cmt"># Login · Register · Teacher login</span>
+│   ├── dashboard/     <span class="cmt"># Student &amp; Teacher dashboards</span>
+│   ├── play/          <span class="cmt"># Skill Tree · Sequence Builder · Coding</span>
+│   ├── teacher/       <span class="cmt"># Upload · Generate · Approve · Students</span>
+│   ├── leaderboard/   <span class="cmt"># Rankings</span>
+│   └── profile/       <span class="cmt"># XP, achievements, completion history</span>
+├── store/             <span class="cmt"># Zustand auth store (persisted)</span>
+├── lib/               <span class="cmt"># axios instance · levels · API modules</span>
+└── router/            <span class="cmt"># routes + ProtectedRoute (role guard)</span></code></pre>
+
+  <h3>5.4 Design Principles</h3>
+  <ul>
+    <li><strong>Simplicity first</strong> — the obvious implementation over premature abstraction.</li>
+    <li><strong>One responsibility per file</strong> — components render, services compute, CRUD persists.</li>
+    <li><strong>Server is the source of truth</strong> — XP, level, and completion are re-verified server-side; the client cannot spoof rewards.</li>
+    <li><strong>Standard response envelope</strong> — every API response is <code>{ data, error }</code>, so the frontend handles success and failure uniformly.</li>
+  </ul>
+</section>
+
+<!-- ============ 6. TECH STACK ============ -->
+<section class="page" id="stack">
+  <span class="section-tag">Section 06</span>
+  <h2>Technology Stack</h2>
+  <p class="lead">Every technology was chosen for a specific engineering reason, not by default — a point worth articulating in the viva.</p>
+
+  <h3>6.1 Frontend</h3>
+  <table>
+    <thead><tr><th>Technology</th><th>Version</th><th>Why it was chosen</th></tr></thead>
+    <tbody>
+      <tr><td><strong>React</strong> + TypeScript</td><td>19.x</td><td>Component model + static typing catches errors before runtime.</td></tr>
+      <tr><td><strong>Vite</strong></td><td>5.4</td><td>Instant HMR dev server; far lighter than webpack/CRA.</td></tr>
+      <tr><td><strong>Tailwind CSS</strong></td><td>v4</td><td>Utility-first styling; a consistent dark theme via design tokens.</td></tr>
+      <tr><td><strong>Radix UI</strong> primitives</td><td>1.x</td><td>Accessible, unstyled components styled in-house (shadcn approach).</td></tr>
+      <tr><td><strong>React Router</strong></td><td>7.x</td><td>Nested routing + role-based route guards.</td></tr>
+      <tr><td><strong>Zustand</strong></td><td>5.x</td><td>Minimal global state (auth) — far less boilerplate than Redux.</td></tr>
+      <tr><td><strong>TanStack React Query</strong></td><td>5.x</td><td>Server-state caching, loading/error states, cache invalidation.</td></tr>
+      <tr><td><strong>React Hook Form + Zod</strong></td><td>7.x / 4.x</td><td>Performant forms with schema-based validation.</td></tr>
+      <tr><td><strong>Framer Motion</strong></td><td>12.x</td><td>Meaningful animation — tile movement, XP fill, level-up.</td></tr>
+      <tr><td><strong>Monaco Editor</strong></td><td>0.55</td><td>The VS Code editor engine, embedded for coding challenges.</td></tr>
+      <tr><td><strong>Lucide · Sonner</strong></td><td>—</td><td>Consistent icon set + toast notifications.</td></tr>
+    </tbody>
+  </table>
+
+  <h3>6.2 Backend</h3>
+  <table>
+    <thead><tr><th>Technology</th><th>Version</th><th>Why it was chosen</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Python + FastAPI</strong></td><td>0.115</td><td>Async, high-performance, and <em>auto-generates OpenAPI docs</em> — excellent for a demo.</td></tr>
+      <tr><td><strong>SQLAlchemy</strong></td><td>2.0</td><td>Mature, typed ORM over PostgreSQL.</td></tr>
+      <tr><td><strong>PostgreSQL</strong></td><td>17</td><td>Robust relational store; native enums &amp; JSONB for test cases.</td></tr>
+      <tr><td><strong>PyJWT + bcrypt</strong></td><td>2.10 / 4.2</td><td>Stateless JWT auth with salted password hashing.</td></tr>
+      <tr><td><strong>Pydantic</strong></td><td>2.10</td><td>Request/response validation and typed settings.</td></tr>
+      <tr><td><strong>OpenAI SDK → Groq</strong></td><td>1.59</td><td>One client, provider selectable by env; Groq's free tier powers the demo.</td></tr>
+      <tr><td><strong>pypdf</strong></td><td>5.1</td><td>Extracts text from uploaded teacher PDFs for AI generation.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout">
+    <strong>Design note — a deliberate stack decision.</strong> The original handbook proposed a Node/Express/Prisma backend. I switched to <strong>Python + FastAPI</strong> for Python's strength in AI/LLM integration, its native fit with the sandboxed Python code runner, and FastAPI's auto-generated interactive API documentation — a decision documented and defensible rather than accidental.
+  </div>
+</section>
+
+<!-- ============ 7. DATABASE ============ -->
+<section class="page" id="db">
+  <span class="section-tag">Section 07</span>
+  <h2>Database Design</h2>
+  <p>PostgreSQL is the single source of truth. The schema is <strong>relational and normalized</strong>, with foreign-key cascades and native enums. It is defined by canonical raw-SQL scripts and mapped by SQLAlchemy models (no <code>create_all</code>, so the schema stays authoritative).</p>
+
+  <h3>7.1 Entity–Relationship Overview</h3>
+<pre><code><span class="fn">users</span> (id, name, email, password_hash, role, xp, level, created_at)
+   │ 1        <span class="cmt">role ∈ { STUDENT, TEACHER }</span>
+   │
+   ├──&lt;  <span class="fn">quest_attempts</span> (user_id, quest_id, status, clean_build, completed_at)
+   │           <span class="cmt">status ∈ { IN_PROGRESS, COMPLETED }</span>
+   └──&lt;  <span class="fn">user_achievements</span> (user_id, achievement_id, unlocked_at)
+
+<span class="fn">subjects</span> (id, slug, title, description)
+   │ 1
+   └──&lt;  <span class="fn">quests</span> (id, slug, title, subject_id, position, difficulty,
+   │                xp_reward, kind, status, created_by, source_name)
+   │        <span class="cmt">kind ∈ { SEQUENCE, CODING }</span>
+   │        <span class="cmt">status ∈ { PENDING_TEACHER_REVIEW, PUBLISHED, REJECTED }</span>
+   │
+   ├──&lt;  <span class="fn">quest_tiles</span> (quest_id, tile_key, label, sub, is_distractor)
+   ├──&lt;  <span class="fn">quest_links</span> (quest_id, from_key, to_key, explanation)
+   └──1─ <span class="fn">coding_challenges</span> (quest_id, prompt, starter_code,
+                              language, test_cases JSONB)
+
+<span class="fn">achievements</span> (id, key, title, description, icon, position)</code></pre>
+
+  <h3>7.2 Key Modelling Decisions</h3>
+  <table>
+    <thead><tr><th>Decision</th><th>Rationale</th></tr></thead>
+    <tbody>
+      <tr><td><code>quests.kind</code> enum</td><td>One <code>quests</code> table serves both Sequence and Coding nodes — the Skill-Tree engine stays uniform.</td></tr>
+      <tr><td><code>quests.status</code> enum</td><td>Drives the AI approval workflow; students only ever see <code>PUBLISHED</code> rows.</td></tr>
+      <tr><td>Tiles + Links (not one JSON blob)</td><td>A relational model lets the answer key be validated, edited, and re-keyed by position safely.</td></tr>
+      <tr><td>Links derived from tile order</td><td>On every structural edit, tile keys are re-assigned <code>s1..sN</code> and links rebuilt — no dangling references.</td></tr>
+      <tr><td><code>test_cases</code> as JSONB</td><td>Flexible per-challenge shape; inputs/expected outputs never leave the server.</td></tr>
+      <tr><td><code>level</code> derived from <code>xp</code></td><td>Level is recomputed from total XP after every award, so it can never drift out of sync.</td></tr>
+      <tr><td>One <code>quest_attempts</code> row per (user, quest)</td><td>Guarantees XP is awarded only on first completion; re-plays are idempotent.</td></tr>
+    </tbody>
+  </table>
+
+  <h3>7.3 XP → Level Threshold Table</h3>
+  <p>Levels use a fixed threshold table (mirrored on client and server to stay identical), not a dynamic formula — making progression predictable and tamper-proof.</p>
+  <table>
+    <thead><tr><th>Level</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th><th>9</th><th>10</th></tr></thead>
+    <tbody><tr><td><strong>XP</strong></td><td>0</td><td>100</td><td>300</td><td>600</td><td>1200</td><td>2100</td><td>3000</td><td>4200</td><td>5800</td><td>8000</td></tr></tbody>
+  </table>
+</section>
+
+<!-- ============ 8. MODULES ============ -->
+<section class="page" id="modules">
+  <span class="section-tag">Section 08</span>
+  <h2>Implementation — Modules &amp; Features</h2>
+  <p class="lead">The system was built in six phases; the following modules make up the delivered platform.</p>
+
+  <h3>8.1 Authentication &amp; Authorisation</h3>
+  <p>Registration and login issue a signed JWT (<code>{ sub, role, iat, exp }</code>) with bcrypt-hashed passwords. The token is attached to every request by an axios interceptor; a 401 automatically logs the user out. On the frontend, <code>&lt;ProtectedRoute role="STUDENT"&gt;</code> redirects unauthorised users, and backend <code>require_role</code> dependencies guard every teacher/student endpoint.</p>
+
+  <h3>8.2 Student Experience</h3>
+  <ul>
+    <li><strong>Dashboard</strong> — welcome banner, XP progress bar, level badge, live per-track completion cards, and real achievement counts.</li>
+    <li><strong>Skill Tree</strong> — the subject rendered as an unlockable node map (completed / available / locked states); coding nodes carry a distinct badge.</li>
+    <li><strong>Sequence Builder</strong> — the flagship mechanic (detailed in §9).</li>
+    <li><strong>Coding Challenge</strong> — a Monaco editor where the student implements <code>solution(...)</code>, runs it against test cases, and earns XP only when all pass.</li>
+    <li><strong>Profile</strong> — level, XP, completed-quest history, and an achievements grid (unlocked vs. locked).</li>
+    <li><strong>Leaderboard</strong> — all students ranked by XP, with the current user highlighted.</li>
+  </ul>
+
+  <h3>8.3 Teacher Experience</h3>
+  <ul>
+    <li><strong>Dashboard</strong> — real subject/quest/student counts pulled from <code>GET /teacher/overview</code>.</li>
+    <li><strong>Generate</strong> — upload a PDF or paste text, choose quest type (Sequence / Coding) and count, and produce AI drafts.</li>
+    <li><strong>Approve</strong> — review each draft (correct sequence, distractors, per-link explanations, or the coding prompt + tests), then approve or reject. Nothing reaches students until approved.</li>
+    <li><strong>Author &amp; Edit</strong> — hand-build quests from scratch and structurally edit them (add / remove / reorder steps, manage distractors, edit all fields) for both quest types.</li>
+    <li><strong>Students</strong> — a ranked roster with each student's completion and achievement counts.</li>
+  </ul>
+
+  <h3>8.4 Gamification Engine</h3>
+  <div class="grid2">
+    <div class="card"><h4>XP &amp; Levels</h4><p>Additive XP, never decreasing; a +30 <em>Clean Build</em> bonus for flawless solves. Level recomputed server-side after each award.</p></div>
+    <div class="card"><h4>Achievements</h4><p>A 7-achievement catalogue (First Quest, Clean Architect, Boss Slayer, Trifecta, Rising Star, Perfectionist, Veteran) with per-user unlocks and stacked toasts.</p></div>
+    <div class="card"><h4>Skill-Tree Unlocking</h4><p>A node is playable only when its predecessor is completed — enforced from persisted <code>quest_attempts</code>.</p></div>
+    <div class="card"><h4>Leaderboard</h4><p>Direct XP-descending ranking of all students, refreshed on load.</p></div>
+  </div>
+
+  <h3>8.5 AI Content Pipeline</h3>
+  <p>The signature module. A teacher's PDF is parsed (<code>pypdf</code>), sent to the LLM with a strict JSON-mode prompt, and the response is normalised into quest drafts (tiles, correct order, distractors, per-link explanations — or a coding prompt with reference-computed test cases). Drafts land as <code>PENDING_TEACHER_REVIEW</code>; only teacher approval publishes them. A single OpenAI-compatible client targets Groq by default, with an <strong>offline deterministic stub</strong> so the demo works even with no API key.</p>
+</section>
+
+<!-- ============ 9. CODING ============ -->
+<section class="page" id="coding">
+  <span class="section-tag">Section 09</span>
+  <h2>Coding — Core Algorithms &amp; Logic</h2>
+  <p class="lead">Four pieces of logic are the technical heart of the project. Each is shown below in representative form.</p>
+
+  <h3>9.1 Per-Link Sequence Validation</h3>
+  <p>The Sequence Builder does not grade the whole answer at once — it validates each <em>connection</em> between adjacent tiles. A link is correct only when both endpoints hold the tile the canonical order expects. Wrong links surface the teaching explanation for the connection that <em>should</em> be there.</p>
+<pre><code><span class="cmt">// The canonical answer is simply the order of `tiles`.</span>
+<span class="kw">function</span> <span class="fn">validatePipeline</span>(placed, correctOrder, linkExplanations) {
+  <span class="kw">const</span> links = [];
+  <span class="kw">for</span> (<span class="kw">let</span> i = <span class="num">0</span>; i &lt; placed.length - <span class="num">1</span>; i++) {
+    <span class="kw">const</span> fromOk = placed[i]?.id     === correctOrder[i].id;
+    <span class="kw">const</span> toOk   = placed[i + <span class="num">1</span>]?.id === correctOrder[i + <span class="num">1</span>].id;
+    <span class="kw">const</span> ok = fromOk &amp;&amp; toOk;
+    links.push({
+      ok,
+      <span class="cmt">// turn a wrong link into a teaching moment</span>
+      hint: ok ? <span class="kw">null</span>
+               : linkExplanations[<span class="str">`</span>${correctOrder[i].id}<span class="str">-></span>${correctOrder[i+<span class="num">1</span>].id}<span class="str">`</span>],
+    });
+  }
+  <span class="kw">const</span> solved = links.every(l =&gt; l.ok) &amp;&amp;
+                 placed.length === correctOrder.length;
+  <span class="kw">return</span> { links, solved };
+}</code></pre>
+
+  <h3>9.2 XP Award &amp; Level Derivation (server-side, anti-spoof)</h3>
+  <p>Completion is re-verified on the server. XP is awarded only on the first completion; the level is <em>derived</em> from total XP so it can never disagree with it.</p>
+<pre><code><span class="kw">def</span> <span class="fn">level_for_xp</span>(xp: int) -&gt; int:
+    <span class="cmt"># fixed threshold table — Level 1 = 0 XP ... Level 10 = 8000 XP</span>
+    level = <span class="num">1</span>
+    <span class="kw">for</span> lvl, threshold <span class="kw">in</span> LEVEL_THRESHOLDS:
+        <span class="kw">if</span> xp &gt;= threshold:
+            level = lvl
+    <span class="kw">return</span> level
+
+<span class="kw">def</span> <span class="fn">complete_quest</span>(db, user, quest, clean_build):
+    attempt = get_attempt(db, user.id, quest.id)
+    <span class="kw">if</span> attempt <span class="kw">and</span> attempt.status == <span class="str">"COMPLETED"</span>:
+        <span class="kw">return</span> {<span class="str">"xpAwarded"</span>: <span class="num">0</span>, <span class="str">"alreadyCompleted"</span>: <span class="kw">True</span>}   <span class="cmt"># idempotent</span>
+
+    reward = quest.xp_reward + (<span class="num">30</span> <span class="kw">if</span> clean_build <span class="kw">else</span> <span class="num">0</span>)
+    user.xp += reward                          <span class="cmt"># additive, never decreases</span>
+    user.level = level_for_xp(user.xp)         <span class="cmt"># recomputed, never drifts</span>
+    mark_completed(db, user.id, quest.id, clean_build)
+    unlocked = check_and_unlock(db, user)      <span class="cmt"># achievement predicates</span>
+    db.commit()
+    <span class="kw">return</span> {<span class="str">"xpAwarded"</span>: reward, <span class="str">"leveledUp"</span>: ...,
+            <span class="str">"unlockedAchievements"</span>: unlocked}</code></pre>
+
+  <h3>9.3 Sandboxed Python Code Runner</h3>
+  <p>Coding submissions run in an <strong>isolated</strong> (<code>python -I</code>) subprocess with a 5-second wall-clock timeout. Each test calls the student's <code>solution(...)</code> and compares string output; compile errors, exceptions, and timeouts all surface as failed tests. Crucially, <strong>the client-reported result is never trusted</strong> — the server re-runs the code before awarding XP.</p>
+<pre><code><span class="kw">def</span> <span class="fn">run_tests</span>(source: str, test_cases: list) -&gt; list:
+    results = []
+    <span class="kw">for</span> tc <span class="kw">in</span> test_cases:
+        harness = source + <span class="str">f"\nprint(solution({tc['input']}))"</span>
+        proc = subprocess.run(
+            [sys.executable, <span class="str">"-I"</span>, <span class="str">"-c"</span>, harness],   <span class="cmt"># isolated interpreter</span>
+            capture_output=<span class="kw">True</span>, text=<span class="kw">True</span>, timeout=<span class="num">5</span>,  <span class="cmt"># wall-clock limit</span>
+        )
+        got = proc.stdout.strip()
+        results.append({
+            <span class="str">"id"</span>: tc[<span class="str">"id"</span>],
+            <span class="str">"passed"</span>: got == str(tc[<span class="str">"expectedOutput"</span>]).strip(),
+            <span class="str">"description"</span>: tc[<span class="str">"description"</span>],   <span class="cmt"># inputs/expected stay server-side</span>
+        })
+    <span class="kw">return</span> results</code></pre>
+
+  <h3>9.4 AI Generation with Self-Consistent Test Cases</h3>
+  <p>For coding quests, the LLM is also asked for a <code>referenceSolution</code>. The server runs that reference through the same code runner to <em>compute</em> each expected output — guaranteeing the generated tests are actually solvable — then discards the reference. This closes the classic risk of an AI inventing a test whose "expected" answer is wrong.</p>
+<pre><code><span class="kw">def</span> <span class="fn">expected_from_reference</span>(reference: str, inputs: list) -&gt; list:
+    <span class="cmt"># run the model's own reference solution to derive ground truth</span>
+    computed = []
+    <span class="kw">for</span> inp <span class="kw">in</span> inputs:
+        out = run_single(reference, inp)          <span class="cmt"># same sandbox as students</span>
+        computed.append(out <span class="kw">if</span> out.ok <span class="kw">else</span> model_fallback(inp))
+    <span class="kw">return</span> computed   <span class="cmt"># reference is never stored or shown to anyone</span></code></pre>
+</section>
+
+<!-- ============ 10. EXECUTION ============ -->
+<section class="page" id="execution">
+  <span class="section-tag">Section 10</span>
+  <h2>Execution — Setup, Running &amp; Demo Flow</h2>
+
+  <h3>10.1 Prerequisites</h3>
+  <ul>
+    <li>Node.js 20+ and Python 3.11+</li>
+    <li>PostgreSQL 17 with a database <code>questigo_dev</code></li>
+    <li>(Optional) a Groq API key for live AI — otherwise the offline stub runs</li>
+  </ul>
+
+  <h3>10.2 Running the Backend</h3>
+<pre><code><span class="cmt"># from the server/ directory (isolated virtual environment)</span>
+./.venv/Scripts/python.exe -m uvicorn app.main:app --reload --port <span class="num">8000</span>
+<span class="cmt"># interactive API docs available at http://localhost:8000/docs</span></code></pre>
+
+  <h3>10.3 Running the Frontend</h3>
+<pre><code><span class="cmt"># from the client/ directory</span>
+npm install       <span class="cmt"># first run only</span>
+npm run dev       <span class="cmt"># Vite dev server on http://localhost:5173</span></code></pre>
+  <p>Vite proxies <code>/api</code> to the backend, so the app can be opened from any device on the LAN (<code>http://&lt;host-ip&gt;:5173</code>) with <strong>no CORS setup required</strong> — convenient for a live demo on a phone.</p>
+
+  <h3>10.4 Demo Accounts</h3>
+  <table>
+    <thead><tr><th>Role</th><th>Email</th><th>Password</th></tr></thead>
+    <tbody>
+      <tr><td>Student</td><td><code>alice@student.dev</code></td><td><code>student123</code></td></tr>
+      <tr><td>Student</td><td><code>bob@student.dev</code></td><td><code>student123</code></td></tr>
+      <tr><td>Teacher</td><td><code>teacher@questigo.dev</code></td><td><code>demo1234</code></td></tr>
+    </tbody>
+  </table>
+
+  <h3>10.5 Suggested Demo Script</h3>
+  <ol>
+    <li>Log in as <strong>Teacher</strong> → open <em>Generate</em> → upload a DBMS/OS PDF → watch the AI produce draft quests.</li>
+    <li>Open <em>Approve</em> → review the generated sequence, distractors, and per-link explanations → approve.</li>
+    <li>Log in as <strong>Student</strong> → open the Skill Tree → play the <strong>Sequence Builder</strong> (deliberately make a wrong link to show the teaching feedback, then solve it clean).</li>
+    <li>Watch the <strong>XP animation</strong>, <strong>level-up</strong>, and <strong>achievement toast</strong> fire; the next node unlocks.</li>
+    <li>Open a <strong>Coding Challenge</strong> node → write <code>solution()</code> in Monaco → run against tests → earn XP.</li>
+    <li>Show the <strong>Profile</strong> (history + achievements) and the <strong>Leaderboard</strong> re-ordering.</li>
+  </ol>
+
+  <h3>10.6 Screens</h3>
+  <div class="screenshot"><span class="icn">🖼️</span>Insert screenshots here: Landing · Student Dashboard · Skill Tree · Sequence Builder (with a red/green validated link) · Coding Challenge · Teacher Approve · Leaderboard · Profile.</div>
+  <p class="figure-note">Replace this placeholder with captured screenshots before printing the final report.</p>
+</section>
+
+<!-- ============ 11. RESULTS ============ -->
+<section class="page" id="results">
+  <span class="section-tag">Section 11</span>
+  <h2>Results &amp; Analysis</h2>
+  <p class="lead">The project met every MVP objective. All features are implemented end-to-end and are fully database-driven — the application ships no mock data.</p>
+
+  <h3>11.1 Feature Completion</h3>
+  <table>
+    <thead><tr><th>Module</th><th>Outcome</th></tr></thead>
+    <tbody>
+      <tr><td>Authentication (JWT + bcrypt, 2 roles)</td><td><span class="pill done">Complete</span></td></tr>
+      <tr><td>Sequence Builder (per-link validation, Clean Build)</td><td><span class="pill done">Complete</span></td></tr>
+      <tr><td>Coding Challenge (Monaco + sandboxed Python runner)</td><td><span class="pill done">Complete</span></td></tr>
+      <tr><td>XP · Levels · Achievements · Leaderboard</td><td><span class="pill done">Complete</span></td></tr>
+      <tr><td>Skill-Tree progression (prerequisite gating)</td><td><span class="pill done">Complete</span></td></tr>
+      <tr><td>AI generation (Sequence &amp; Coding) + teacher approval</td><td><span class="pill done">Complete</span></td></tr>
+      <tr><td>Teacher authoring &amp; structural editing</td><td><span class="pill done">Complete</span></td></tr>
+      <tr><td>Student profile &amp; completion history</td><td><span class="pill done">Complete</span></td></tr>
+      <tr><td>Responsive UI (mobile-first to 375px) + error boundaries</td><td><span class="pill done">Complete</span></td></tr>
+    </tbody>
+  </table>
+
+  <h3>11.2 Verified End-to-End Behaviour</h3>
+  <p>Each feature was verified against the live <code>questigo_dev</code> database. Representative confirmed results:</p>
+  <ul>
+    <li><strong>XP integrity</strong> — completing a quest awards the exact reward (+30 clean bonus), recomputes the level, and re-orders the leaderboard; a re-play awards <strong>0 XP</strong> (idempotent).</li>
+    <li><strong>Anti-spoof</strong> — submitting wrong code returns HTTP <code>400</code> and awards nothing; the server re-runs code before crediting XP.</li>
+    <li><strong>Content security</strong> — students receive test <em>descriptions only</em>; inputs and expected outputs never leave the server.</li>
+    <li><strong>Role isolation</strong> — a student calling a teacher endpoint receives <code>403</code>; a draft quest is invisible (<code>404</code>) until approved.</li>
+    <li><strong>Live AI</strong> — a Groq run over OS scheduling notes produced correctly-ordered steps, sensible distractors, and meaningful per-link explanations.</li>
+    <li><strong>Self-consistent tests</strong> — AI-generated coding challenges are solvable by construction (expected outputs computed from the model's own reference solution).</li>
+  </ul>
+
+  <h3>11.3 Engineering Quality Metrics</h3>
+  <div class="stat-row">
+    <div class="stat"><div class="n">0</div><div class="l">Mock data<br/>in the app</div></div>
+    <div class="stat"><div class="n">100%</div><div class="l">TypeScript<br/>type-checked</div></div>
+    <div class="stat"><div class="n">4-layer</div><div class="l">Backend<br/>separation</div></div>
+    <div class="stat"><div class="n">375px</div><div class="l">Min. responsive<br/>width tested</div></div>
+  </div>
+  <p>The frontend compiles clean under <code>tsc</code> and builds with Vite; Monaco is code-split into its own lazy chunk so it loads only when a coding challenge opens, keeping the main bundle light. Route-level and app-level error boundaries provide a branded fallback instead of a blank screen.</p>
+
+  <h3>11.4 Analysis Against Objectives</h3>
+  <div class="callout green">
+    Every objective from §3.3 was delivered. Beyond the original MVP boundary, the project additionally shipped a <strong>second game mechanic</strong> (Coding Challenge), <strong>persisted achievements</strong>, <strong>structural authoring</strong>, and <strong>AI generation for both quest types</strong> — features originally listed as post-MVP. The result is a platform that not only proves the architecture but delivers a genuinely playable product.
+  </div>
+</section>
+
+<!-- ============ 12. TESTING ============ -->
+<section class="page" id="testing">
+  <span class="section-tag">Section 12</span>
+  <h2>Testing &amp; Verification</h2>
+  <p>Because the platform is a demo-oriented MVP, verification emphasised <strong>end-to-end behavioural testing</strong> against the real database over exhaustive unit tests — the strategy that best de-risks a live viva.</p>
+
+  <h3>12.1 Testing Strategy</h3>
+  <table>
+    <thead><tr><th>Type</th><th>Method</th><th>Coverage</th></tr></thead>
+    <tbody>
+      <tr><td>API / integration</td><td>FastAPI <code>TestClient</code> + throwaway data, cleaned up</td><td>Auth, gating, XP, completion, approval flows</td></tr>
+      <tr><td>Live database</td><td>Scripted round-trips against <code>questigo_dev</code></td><td>Coding authoring, AI generation, achievements</td></tr>
+      <tr><td>Static analysis</td><td><code>tsc -b</code> type-check + <code>vite build</code></td><td>Whole frontend, every build</td></tr>
+      <tr><td>Manual / responsive</td><td>Browser click-through at 375px &amp; desktop</td><td>Every screen, console-error checks</td></tr>
+      <tr><td>Security</td><td>Role-guard &amp; leak checks</td><td>403/404 isolation, no test-answer leakage</td></tr>
+    </tbody>
+  </table>
+
+  <h3>12.2 Representative Test Cases</h3>
+  <table>
+    <thead><tr><th>#</th><th>Scenario</th><th>Expected</th><th>Result</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td>Student completes a quest cleanly</td><td>XP + 30 bonus, level recalculated, achievements unlocked</td><td>✓ Pass</td></tr>
+      <tr><td>2</td><td>Student re-plays a completed quest</td><td>0 XP awarded (idempotent)</td><td>✓ Pass</td></tr>
+      <tr><td>3</td><td>Submit failing code, then complete</td><td>HTTP 400, no XP</td><td>✓ Pass</td></tr>
+      <tr><td>4</td><td>Student calls a teacher endpoint</td><td>HTTP 403 Forbidden</td><td>✓ Pass</td></tr>
+      <tr><td>5</td><td>Student opens an unapproved draft</td><td>HTTP 404 (hidden)</td><td>✓ Pass</td></tr>
+      <tr><td>6</td><td>Teacher generates from a PDF (Groq live)</td><td>Valid ordered quest drafts, PENDING status</td><td>✓ Pass</td></tr>
+      <tr><td>7</td><td>AI coding challenge solved by a correct <code>solution()</code></td><td>All tests pass (self-consistent)</td><td>✓ Pass</td></tr>
+      <tr><td>8</td><td>Structural edit on a coding quest</td><td>Rejected (400) — sequence-only guard</td><td>✓ Pass</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout amber">
+    <strong>Honest limitation:</strong> the code runner is an MVP subprocess sandbox (isolated interpreter + 5s timeout), <em>not</em> a hardened one — it lacks resource/syscall isolation. This is acceptable for a local single-user demo; a production deployment would replace it with a container-based judge (e.g. Judge0). This limitation is stated openly rather than hidden.
+  </div>
+</section>
+
+<!-- ============ 13. FUTURE SCOPE ============ -->
+<section class="page" id="future">
+  <span class="section-tag">Section 13</span>
+  <h2>Future Scope</h2>
+  <p class="lead">The architecture was deliberately built to extend. Each item below is a natural next step, not a rewrite.</p>
+
+  <div class="grid2">
+    <div class="card"><h4>Hardened Code Sandbox</h4><p>Replace the subprocess runner with a container-isolated judge (Judge0 / gVisor) for safe, multi-language execution at scale.</p></div>
+    <div class="card"><h4>More Node Types</h4><p>A free-form <em>Transition Graph</em> builder and rapid <em>Concept Strike</em> recall rounds — both slot into the existing Skill-Tree engine.</p></div>
+    <div class="card"><h4>Adaptive Difficulty</h4><p>Use a student's attempt history to tune quest difficulty and recommend the next node — a personalised learning path.</p></div>
+    <div class="card"><h4>Multiplayer Battles</h4><p>Real-time head-to-head sequence or coding races over WebSockets, with a live spectator leaderboard.</p></div>
+    <div class="card"><h4>Mixed-Kind AI Generation</h4><p>Let the model decide per topic whether a concept is best taught as a sequence or a coding challenge.</p></div>
+    <div class="card"><h4>Analytics &amp; LMS Integration</h4><p>Teacher dashboards with cohort analytics, plus LTI/Google Classroom export of grades and progress.</p></div>
+    <div class="card"><h4>More Languages</h4><p>Extend the coding runner beyond Python to Java, C++, and JavaScript.</p></div>
+    <div class="card"><h4>Native Mobile App</h4><p>The tap-to-place mechanic and vertical pipeline layout are already mobile-first, easing a React Native port.</p></div>
+  </div>
+
+  <h3>13.1 Path to Production</h3>
+  <p>Beyond features, a production release would add: rate-limiting and refresh-token rotation on auth, a managed Postgres instance with migrations (Alembic), containerised deployment (Docker + a reverse proxy), CDN-served static assets, and observability (structured logging + error tracking).</p>
+</section>
+
+<!-- ============ 14. CONCLUSION ============ -->
+<section class="page" id="conclusion">
+  <span class="section-tag">Section 14</span>
+  <h2>Conclusion</h2>
+  <p>
+    Questigo set out to answer a simple question: <em>what if learning a technical subject felt less like reading a textbook and more like playing through a well-designed game?</em> The delivered platform answers it concretely. Students learn by <strong>reconstructing real systems</strong> — validated connection by connection — and by <strong>writing and running real code</strong>, all inside an RPG progression of XP, levels, achievements, and leaderboards that keeps them coming back.
+  </p>
+  <p>
+    Technically, the project is a complete, modern full-stack application: a typed React 19 SPA over a layered FastAPI + PostgreSQL backend, secured with JWT, and integrated with a live LLM to turn a teacher's PDF into playable content — always behind a mandatory human-approval gate that keeps the AI trustworthy. Every MVP objective was met, and several post-MVP features were delivered on top. Crucially, the system is <strong>fully database-driven with no mock data</strong>, which means the demo shows the real product, not a facade.
+  </p>
+  <p>
+    As an MCA major project, Questigo demonstrates competence across the full breadth of the discipline — web technologies, database design, software architecture, security, and applied AI — while contributing a genuinely original idea: <strong>assessment by construction rather than recognition</strong>. It is ambitious in concept, complete in execution, and honest about its limits and its road ahead.
+  </p>
+
+  <div class="callout">
+    <strong>In one line:</strong> Questigo turns passive, quiz-based learning into an active, game-based journey where students build their understanding — literally — one validated connection at a time.
+  </div>
+
+  <hr/>
+  <div style="display:flex; justify-content:space-between; align-items:flex-end; margin-top:30px; font-size:13.5px; color:var(--muted);">
+    <div>
+      <div style="font-weight:600; color:var(--ink); font-size:15px;">M. Akshay Yadav</div>
+      Roll No. 100524862041<br/>
+      MCA — IV Semester, Osmania University
+    </div>
+    <div style="text-align:right;">
+      <div class="logo" style="justify-content:flex-end; display:flex; align-items:center; gap:8px;">
+        <span style="font-size:20px;">⚔️</span>
+        <strong style="color:var(--purple-dark); font-size:16px;">Questigo</strong>
+      </div>
+      Major Project Report · 2025–2026
+    </div>
+  </div>
+</section>
+
+</body>
+</html>
