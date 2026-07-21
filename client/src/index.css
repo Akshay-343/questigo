@@ -1,0 +1,75 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+@import "tailwindcss";
+
+@theme {
+  --color-brand: #7c3aed;
+  --color-brand-light: #9461f7;
+  --color-brand-dark: #5b21b6;
+  --color-background: #0f1117;
+  --color-surface: #1a1d27;
+  --color-surface-raised: #222536;
+  --color-border: #2a2d3e;
+  --color-border-subtle: #1e2130;
+  --color-success: #22c55e;
+  --color-warning: #f59e0b;
+  --color-danger: #ef4444;
+  --color-muted: #6b7280;
+  --color-muted-foreground: #9ca3af;
+  --color-foreground: #f1f5f9;
+  --color-foreground-subtle: #cbd5e1;
+
+  --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+
+  --radius-sm: 0.375rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
+  --radius-2xl: 1.5rem;
+}
+
+/*
+ * NOTE: Do not add an unlayered `* { margin: 0; padding: 0 }` reset here.
+ * Tailwind v4 emits all utilities inside cascade layers, and unlayered rules
+ * win over layered ones — so a bare reset silently kills every padding/margin
+ * utility (px-*, py-*, mb-*, mx-auto, ...). Tailwind's Preflight already
+ * applies this reset inside @layer base, where utilities can override it.
+ */
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: #0f1117;
+  color: #f1f5f9;
+  font-family: 'Inter', ui-sans-serif, system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  min-height: 100vh;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #1a1d27;
+}
+::-webkit-scrollbar-thumb {
+  background: #2a2d3e;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #3a3d5e;
+}
+
+:focus-visible {
+  outline: 2px solid #7c3aed;
+  outline-offset: 2px;
+}

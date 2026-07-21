@@ -1,0 +1,23 @@
+<svg width="128" height="128" viewBox="0 0 128 128" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Questigo">
+  <defs>
+    <linearGradient id="g" x1="28" y1="16" x2="100" y2="112" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#8B5CF6"/>
+      <stop offset="100%" stop-color="#6D28D9"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Hexagon badge (regular pointy-top, centered at 64,64; rounded corners via the matching stroke) -->
+  <path
+    d="M64 16 L106 40 V88 L64 112 L22 88 V40 Z"
+    fill="url(#g)"
+    stroke="url(#g)"
+    stroke-width="8"
+    stroke-linejoin="round"
+  />
+
+  <!-- "Q" ring -->
+  <circle cx="64" cy="60" r="26" stroke="#ffffff" stroke-width="9" fill="none"/>
+
+  <!-- "Q" tail / forward quest arrow -->
+  <path d="M74 70 L93 89" stroke="#ffffff" stroke-width="9" stroke-linecap="round"/>
+</svg>

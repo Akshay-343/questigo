@@ -1,0 +1,65 @@
+# Questigo — 3-container stack (db + backend + frontend).
+#
+# Quick start:
+#   docker compose up -d --build
+#   open http://localhost:5173
+#
+# Reset to the good snapshot (wipes the DB volume, reloads docker/postgres/initdb):
+#   docker compose down -v && docker compose up -d
+#
+# The DB snapshot is loaded ONLY when the data volume is empty (first boot or after
+# `down -v`). Your experiments (uploads, generated games, XP) persist in the volume
+# until you deliberately reset.
+
+services:
+  db:
+    image: postgres:17
+    container_name: questigo-db
+    environment:
+      POSTGRES_USER: qdevdbusr
+      POSTGRES_PASSWORD: password123
+      POSTGRES_DB: questigo_dev
+    ports:
+      # Host 5433 to avoid clashing with a local PostgreSQL on 5432.
+      - "5433:5432"
+    volumes:
+      - questigo_pgdata:/var/lib/postgresql/data
+      # Auto-loaded on an empty volume — this is the "good saved data" snapshot.
+      - ./docker/postgres/initdb:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U qdevdbusr -d questigo_dev"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    restart: unless-stopped
+
+  backend:
+    build: ./server
+    container_name: questigo-backend
+    # AI keys / JWT come from server/.env; DB + CORS are overridden for the container network below.
+    env_file:
+      - ./server/.env
+    environment:
+      DATABASE_URL: postgresql+psycopg2://qdevdbusr:password123@db:5432/questigo_dev
+      CORS_ORIGINS: http://localhost:5173,http://127.0.0.1:5173
+    ports:
+      - "8000:8000"
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ./client
+      args:
+        VITE_API_URL: /api/v1
+    container_name: questigo-frontend
+    ports:
+      - "5173:80"
+    depends_on:
+      - backend
+    restart: unless-stopped
+
+volumes:
+  questigo_pgdata:
